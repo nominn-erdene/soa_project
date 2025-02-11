@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+</head>
+
+<body>
+    <div align="center">
+        <h2>Temperature Converter</h2>
+        <input type="number" id="value" placeholder="Enter a number">
+        <select id="type">
+                <option value="CtoF">Celsius to Fahrenheit</option>
+                <option value="FtoC">Fahrenheit to Celsius</option>
+            </select>
+        <button onclick="convertTemperature()">Convert</button>
+        <h3>Result: <span id="result"></span></h3>
+    </div>
+
+    <script>
+        function convertTemperature() {
+            const value = document.getElementById("value").value;
+            const type = document.getElementById("type").value;
+            fetch(`http://127.0.0.1:5003/convert?value=${value}&type=${type}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("result").textContent = `${data.input} = ${data.result}`;
+                })
+                .catch(error => {
+                    document.getElementById("result").textContent = "Error!";
+                });
+        }
+    </script>
+</body>
+
+</html>
